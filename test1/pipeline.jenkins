@@ -1,0 +1,50 @@
+pipeline {
+    agent { label 'ubuntu '}
+    stages {
+        stage('Docker version') {
+            steps {
+                sh "echo $USER"
+                sh "docker version"
+            }
+        }
+        stage('Delete workdir') {
+            steps {
+                echo 'Deleting workspace'
+                deleteDir()
+            }
+        }
+        stage('Checkout') {
+            steps {
+                git branch: 'main',
+                    url: 'https://github.com/IlyaSemko/nginx-playbook.git'
+
+                sh 'pwd'
+                sh 'ls -la'
+            }
+        }
+        stage('Docker build') {
+            steps {
+                sh 'docker build -t ivsdev/php-app:0.1 .'
+            }
+        }
+
+        stage('Docker push to registry') {
+            steps {
+                withDockerRegistry(credentialsId: 'docker-hub-cred-ivsdev', url: 'https://index.docker.io/v1/'){
+                    sh '''
+                        docker push ivsdev/php-app:0.1
+                    '''
+                }
+                
+            }
+        }
+
+        stage('Delete docker image localy') {
+            steps {
+                sh 'docker rmi ivsdev/php-app:0.1'
+            }
+                
+        }
+    }
+       
+}

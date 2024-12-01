@@ -32,7 +32,7 @@ pipeline {
             steps {
                 withDockerRegistry(credentialsId: 'docker-hub-cred-ivsdev', url: 'https://index.docker.io/v1/'){
                     sh '''
-                        docker push ivsdev/php-app:0.1
+                        docker push ivsdev/php-app:0.2
                     '''
                 }
                 
@@ -41,7 +41,7 @@ pipeline {
 
         stage('Delete docker image localy') {
             steps {
-                sh 'docker rmi ivsdev/php-app:0.1'
+                sh 'docker rmi ivsdev/php-app:0.2'
             }
                 
         }

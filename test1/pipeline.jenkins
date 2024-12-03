@@ -45,6 +45,12 @@ pipeline {
             }
                 
         }
+        stage('Run docker app') {
+            steps {
+                sh 'docker run -p 8888:80 ivsdev/php-app:0.3'
+            }
+                
+        }
     }
        
 }

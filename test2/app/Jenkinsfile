@@ -9,7 +9,10 @@ pipeline {
 
         stage('Run Docker Compose') {
             steps {
-                sh "docker compose up -f test2/app/docker-compose.yaml -d --no-color --wait"
+                sh '''
+                    cd test2/app
+                    docker compose up -d --no-color --wait
+                    '''
                 sh "docker ps"
             }
         }

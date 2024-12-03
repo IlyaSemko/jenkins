@@ -3,7 +3,7 @@ services:
     build: 
       dockerfile: ./Dockerfile
     volumes:
-      - ./php:/etc/nginx/sites-enabled/
+      - ./php:/var/www/html/
     restart: always
     networks:
       - internal
@@ -16,7 +16,7 @@ services:
       - "80:80"
     volumes:
       # - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
-      - ./php:/etc/nginx/sites-enabled/
+      - ./php:/var/www/html/
     restart: always
     depends_on: 
       - php

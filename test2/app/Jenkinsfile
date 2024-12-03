@@ -4,8 +4,14 @@ pipeline {
     environment {
         DOCKER_COMPOSE_PATH = 'test2/app'
     }
-
+    
+    
     stages {
+        stage('Clean Workspace') {
+            steps {
+                cleanWs()  // Очищает рабочее пространство перед клонированием
+            }
+        }  
         stage('Prune Docker container') {
             steps {
                 script {
